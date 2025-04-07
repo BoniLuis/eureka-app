@@ -13,7 +13,10 @@
         #banner {
             width: 730px;
             height: 90px;
-            background-image: url('%%FILE:JPG1%%');
+            /* ADICIONAR BACKGROUND COMPACTO  */
+            /* background-image: url('%%FILE:JPG1%%'); */
+            /* BACKGROUND PARA TESTE*/
+            background-image: url('bg_compacto.jpg');
             background-size: cover;
             background-position: center;
             transition: width 1s, height 1s, background-image 0.5s ease-in-out;
@@ -26,7 +29,10 @@
         #banner.expanded {
             width: 1000px;
             height: 500px;
-            background-image: url('%%FILE:JPG2%%');
+            /* ADICIONAR BACKGROUND EXPANDIDO  */
+            /* background-image: url('%%FILE:JPG2%%'); */
+            /* BACKGROUND PARA TESTE*/
+            background-image: url('bg_expandido.jpg');
             background-size: cover;
             background-position: center;
             position: fixed;
@@ -179,24 +185,53 @@
 
 <body onload="initBanner()">
     <div id="banner" onmouseover="startExpandTimer()" onmouseout="cancelExpandTimer()" onclick="handleBannerClick()">
-        <img id="close_button" src="%%FILE:JPG3%%" alt="Fechar" onclick="closeBanner(event)">
-        <img src="%%FILE:PNG2%%" id="logo" class="image-sequencial" alt="Logo">
-        <img src="%%FILE:PNG3%%" id="cla_1" class="image-sequencial" alt="Cla 1">
-        <img src="%%FILE:PNG1%%" id="cla_2" class="image-sequencial" alt="Cla 2">
 
-        <img src="%%FILE:PNG6%%" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
-        <img src="%%FILE:PNG5%%" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
-        <img src="%%FILE:PNG4%%" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
-        <iframe id="trailer_video" src="https://www.youtube.com/embed/ERIBTIlVVJQ"
-            title="Trailer" frameborder="0"
+        <!-- Banner Compacto -->
+        <!-- Botão Fechar-->
+        <!-- <img id="close_button" src="%%FILE:JPG3%%" alt="Fechar" onclick="closeBanner(event)"> -->
+        <img id="close_button" src="close_square.jpg" alt="Fechar" onclick="closeBanner(event)">
+
+        <!-- Logo -->
+        <!-- <img src="%%FILE:PNG2%%" id="logo" class="image-sequencial" alt="Logo"> -->
+        <img src="logo.png" id="logo" class="image-sequencial" alt="Logo">
+
+        <!-- Cla 1 -->
+        <!-- <img src="%%FILE:PNG3%%" id="cla_1" class="image-sequencial" alt="Cla 1"> -->
+        <img src="cla_1.png" id="cla_1" class="image-sequencial" alt="Cla 1">
+
+        <!-- Cla 2 -->
+        <!-- <img src="%%FILE:PNG1%%" id="cla_2" class="image-sequencial" alt="Cla 2"> -->
+        <img src="cla_2.png" id="cla_2" class="image-sequencial" alt="Cla 2">
+
+
+        <!-- Banner Expandido -->
+        <!-- Logo Expandido -->
+        <!-- <img src="%%FILE:PNG6%%" id="logo_expandido" class="image-expandido" alt="Logo Expandido"> -->
+        <img src="logo_expandido.png" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
+
+        <!-- Cla 1 Expandido -->
+        <!-- <img src="%%FILE:PNG5%%" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido"> -->
+        <img src="cla_1_expandido.png" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
+
+        <!-- Cla 2 Expandido      -->
+        <!-- <img src="%%FILE:PNG4%%" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido"> -->
+        <img src="cla_2_expandido.png" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
+
+        <!-- Vídeo Trailer -->
+        <!-- Adicionar link do vídeo-->
+        <iframe id="trailer_video" src="https://www.youtube.com/embed/ERIBTIlVVJQ" title="Trailer" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
         </iframe>
 
+        <!-- Barra de loading do banner-->
         <div id="progress_bar"></div>
     </div>
+
+    <!-- Iframe Container -->
     <div id="iframe_container">
         <iframe id="content_frame"></iframe>
+        <!-- Botão Fechar Iframe -->
         <img id="close_button" src="close_square.jpg" alt="Fechar" onclick="closeIframe(event)">
     </div>
     <script>
@@ -211,7 +246,10 @@
         }
 
         function handleBannerClick() {
+            // Chamada da função para abrir o iframe com o site desejado
             //open_url_in_iframe("https://pages.github.com/");
+
+            // Abrir o URL em uma nova aba
             window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
         }
 
@@ -238,9 +276,9 @@
         }
 
         function expandOnHover() {
-          if(window.frameElement){
-              window.frameElement.style.width = "1000px";
-            	window.frameElement.style.height = "500px";
+            if (window.frameElement) {
+                window.frameElement.style.width = "1000px";
+                window.frameElement.style.height = "500px";
             }
             clearInterval(progressBarInterval);
             var banner = document.getElementById('banner');
@@ -251,12 +289,12 @@
 
         function expandBanner() {
             setTimeout(() => {
-            if(window.frameElement){
-              window.frameElement.style.width = "1000px";
-            	window.frameElement.style.height = "500px";
-            }
+                if (window.frameElement) {
+                    window.frameElement.style.width = "1000px";
+                    window.frameElement.style.height = "500px";
+                }
 
-            document.getElementById('banner').style.display = 'block';
+                document.getElementById('banner').style.display = 'block';
                 var banner = document.getElementById('banner');
                 if (!banner.classList.contains('expanded')) {
                     banner.classList.add('expanded');
@@ -281,15 +319,9 @@
 
 
         function initBanner() {
-          
-            // setTimeout(() => {
-            //           window.frameElement.parentElement.parentElement.parentElement.querySelector('.btn_close, .ai-close-button').style.display = "none";
-            //         }, 500);
-            //expandBanner();
             setTimeout(() => {
                 document.getElementById('banner').classList.add('animar-imagens');
             }, 100);
-
         }
     </script>
 </body>

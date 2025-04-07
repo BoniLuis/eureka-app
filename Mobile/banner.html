@@ -14,7 +14,10 @@
         #banner {
             width: 320px;
             height: 80px;
-            background-image: url('%%FILE:PNG1%%');
+            /* ADICIONAR BACKGROUND COMPACTO  */
+            /* background-image: url('%%FILE:JPG1%%'); */
+            /* BACKGROUND PARA TESTE*/
+            background-image: url('bg_compacto_mobile.png');
             background-size: cover;
             background-position: center;
             transition: height 0.5s, background-image 0.5s ease-in-out;
@@ -29,7 +32,10 @@
 
         #banner.expanded {
             height: 640px;
-            background-image: url('%%FILE:PNG2%%');
+            /* ADICIONAR BACKGROUND EXPANDIDO  */
+            /* background-image: url('%%FILE:JPG2%%'); */
+            /* BACKGROUND PARA TESTE*/
+            background-image: url('bg_expandido_mobile.png');
         }
 
         #close_button,
@@ -156,14 +162,37 @@
 
 <body onload="initBanner()">
     <div id="banner" onclick="handleBannerClick()">
-        <img id="close_button" src="%%FILE:JPG1%%" alt="Fechar" onclick="closeBanner(event)">
-        <img src="%%FILE:PNG8%%" id="logo" class="image-sequencial" alt="Logo">
-        <img src="%%FILE:PNG4%%" id="cla_1" class="image-sequencial" alt="Cla 1">
-        <img src="%%FILE:PNG6%%" id="cla_2" class="image-sequencial" alt="Cla 2">
+        <!-- Banner Compacto -->
+        <!-- Botão Fechar-->
+        <!-- <img id="close_button" src="%%FILE:JPG3%%" alt="Fechar" onclick="closeBanner(event)"> -->
+        <img id="close_button" src="close_square.jpg" alt="Fechar" onclick="closeBanner(event)">
 
-        <img src="%%FILE:PNG7%%" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
-        <img src="%%FILE:PNG3%%" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
-        <img src="%%FILE:PNG5%%" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
+        <!-- Logo -->
+        <!-- <img src="%%FILE:PNG2%%" id="logo" class="image-sequencial" alt="Logo"> -->
+        <img src="logo.png" id="logo" class="image-sequencial" alt="Logo">
+
+        <!-- Cla 1 -->
+        <!-- <img src="%%FILE:PNG3%%" id="cla_1" class="image-sequencial" alt="Cla 1"> -->
+        <img src="cla_1.png" id="cla_1" class="image-sequencial" alt="Cla 1">
+
+        <!-- Cla 2 -->
+        <!-- <img src="%%FILE:PNG1%%" id="cla_2" class="image-sequencial" alt="Cla 2"> -->
+        <img src="cla_2.png" id="cla_2" class="image-sequencial" alt="Cla 2">
+
+
+        <!-- Banner Expandido -->
+        <!-- Logo Expandido -->
+        <!-- <img src="%%FILE:PNG6%%" id="logo_expandido" class="image-expandido" alt="Logo Expandido"> -->
+        <img src="logo_expandido.png" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
+
+        <!-- Cla 1 Expandido -->
+        <!-- <img src="%%FILE:PNG5%%" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido"> -->
+        <img src="cla_1_expandido.png" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
+
+        <!-- Cla 2 Expandido      -->
+        <!-- <img src="%%FILE:PNG4%%" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido"> -->
+        <img src="cla_2_expandido.png" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
+
         <!-- <iframe id="trailer_video" src="https://www.youtube.com/embed/1bIE5P6r-5s?rel=0&autoplay=0&controls=1"
             title="Trailer" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -183,7 +212,10 @@
         }
 
         function handleBannerClick() {
-            // open_url_in_iframe("https://pages.github.com/");
+            // Chamada da função para abrir o iframe com o site desejado
+            //open_url_in_iframe("https://pages.github.com/");
+
+            // Abrir o URL em uma nova aba
             window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
         }
 

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #banner {
+            width: 730px;
+            height: 90px;
+            background-image: url('bg_compacto.jpg');
+            background-size: cover;
+            background-position: center;
+            transition: width 1s, height 1s, background-image 0.5s ease-in-out;
+            position: fixed;
+            inset: auto 0px 0px;
+            margin: auto;
+            cursor: pointer;
+        }
+
+        #banner.expanded {
+            width: 1000px;
+            height: 500px;
+            background-image: url('bg_expandido.jpg');
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            inset: auto 0px 0px;
+            margin: auto;
+            
+        }
+
+        #close_button,
+        #close_button_iframe {
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            right: 0;
+            top: -14px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .image-sequencial {
+            position: absolute;
+            opacity: 0;
+            transition: transform 1s ease, opacity 1s ease;
+        }
+
+        #logo,
+        #cla_1,
+        #cla_2 {
+            left: -200px;
+        }
+
+        #logo {
+            top: 35px;
+            width: 250px;
+        }
+
+        #cla_1 {
+            top: 20px;
+        }
+
+        #cla_2 {
+            top: 50px;
+        }
+
+
+        #banner.animar-imagens #logo {
+            transform: translateX(250px);
+            opacity: 1;
+            transition-delay: 0s;
+        }
+
+        #banner.animar-imagens #cla_1 {
+            transform: translateX(650px);
+            opacity: 1;
+            transition-delay: 1s;
+        }
+
+        #banner.animar-imagens #cla_2 {
+            transform: translateX(660px);
+            opacity: 1;
+            transition-delay: 2s;
+        }
+
+        #banner.expanded .image-sequencial {
+            display: none;
+        }
+
+        .image-expandido {
+            position: absolute;
+            opacity: 0;
+            transition: transform 1s ease, opacity 0.3s ease;
+        }
+
+        #logo_expandido {
+            left: -300px;
+            width: 300px;
+        }
+
+        #cla_1_expandido {
+            top: 320px;
+            left: -300px;
+        }
+
+        #cla_2_expandido {
+            top: 360px;
+            left: -300px;
+        }
+
+        #banner.expanded #logo_expandido {
+            transform: translateX(850px);
+            bottom: 20px;
+            opacity: 1;
+            transition-delay: 0.5s;
+        }
+
+        #banner.expanded #cla_1_expandido {
+            transform: translateX(420px);
+            opacity: 1;
+            transition-delay: 1.2s;
+        }
+
+        #banner.expanded #cla_2_expandido {
+            transform: translateX(430px);
+            opacity: 1;
+            transition-delay: 2s;
+        }
+
+        /* Vídeo */
+        #trailer_video {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 480px;
+            height: 270px;
+            opacity: 0;
+            transition: opacity 1s ease 0.1s;
+        }
+
+        #banner.expanded #trailer_video {
+            opacity: 1;
+        }
+
+
+        #progress_bar {
+            height: 2px;
+            width: 0%;
+            background-color: #4B81FA;
+            position: absolute;
+            bottom: 0;
+            transition: width 1s;
+        }
+
+        #iframe_container {
+            width: 80%;
+            height: 80%;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+    <title>Expanding Banner</title>
+</head>
+
+<body onload="initBanner()">
+    <div id="banner" onmouseover="startExpandTimer()" onmouseout="cancelExpandTimer()" onclick="handleBannerClick()">
+        <img id="close_button" src="close_square.jpg" alt="Fechar" onclick="closeBanner(event)">
+        <img src="logo.png" id="logo" class="image-sequencial" alt="Logo">
+        <img src="cla_1.png" id="cla_1" class="image-sequencial" alt="Cla 1">
+        <img src="cla_2.png" id="cla_2" class="image-sequencial" alt="Cla 2">
+
+        <img src="logo_expandido.png" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
+        <img src="cla_1_expandido.png" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
+        <img src="cla_2_expandido.png" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
+        <iframe id="trailer_video" src="https://www.youtube.com/embed/1bIE5P6r-5s?rel=0&autoplay=0&controls=1"
+            title="Trailer" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+
+        <div id="progress_bar"></div>
+    </div>
+    <div id="iframe_container">
+        <iframe id="content_frame"></iframe>
+        <img id="close_button" src="close_square.jpg" alt="Fechar" onclick="closeIframe(event)">
+    </div>
+    <script>
+        var expandTimer;
+        var progressBarWidth = 0;
+        var progressBarInterval;
+
+
+        // Chamada da função onclick="open_url()" no HTML
+        // function open_url() {
+        //     window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
+        // }
+
+        function open_url_in_iframe(url) {
+            document.getElementById('iframe_container').style.display = 'block';
+            document.getElementById('iframe_container').style.margin = 'auto';
+            document.getElementById('content_frame').src = url;
+        }
+
+        function handleBannerClick() {
+            // open_url_in_iframe("https://pages.github.com/");
+            // window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
+            window.open("https://pages.github.com/", "_blank");
+        }
+
+        function startExpandTimer() {
+            progressBarWidth = 0;
+            document.getElementById('progress_bar').style.width = '0%';
+            clearInterval(progressBarInterval);
+            progressBarInterval = setInterval(increaseProgressBar, 100);
+            expandTimer = setTimeout(expandOnHover, 3000);
+        }
+
+        function cancelExpandTimer() {
+            clearInterval(progressBarInterval);
+            clearTimeout(expandTimer);
+            progressBarWidth = 0;
+            document.getElementById('progress_bar').style.width = '0%';
+        }
+
+        function increaseProgressBar() {
+            if (progressBarWidth < 100) {
+                progressBarWidth += 10;
+                document.getElementById('progress_bar').style.width = progressBarWidth + '%';
+            }
+        }
+
+        function expandOnHover() {
+            clearInterval(progressBarInterval);
+            var banner = document.getElementById('banner');
+            if (!banner.classList.contains('expanded')) {
+                banner.classList.add('expanded');
+            }
+        }
+
+        function expandBanner() {
+            // window.frameElement.style.width = "1000px";
+            // window.frameElement.style.height = "530px";
+            document.getElementById('banner').style.display = 'block';
+            setTimeout(() => {
+                var banner = document.getElementById('banner');
+                if (!banner.classList.contains('expanded')) {
+                    banner.classList.add('expanded');
+                }
+            }, 3000);
+        }
+
+        function closeBanner(event) {
+            event.stopPropagation();
+            var banner = document.getElementById('banner');
+            if (banner.classList.contains('expanded')) {
+                banner.classList.remove('expanded');
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        function closeIframe() {
+            var iframe = document.getElementById('iframe_container');
+            iframe.style.display = 'none';
+        }
+
+        function initBanner() {
+            // expandBanner();
+            setTimeout(() => {
+                document.getElementById('banner').classList.add('animar-imagens');
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>

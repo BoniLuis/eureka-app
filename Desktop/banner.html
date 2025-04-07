@@ -13,7 +13,7 @@
         #banner {
             width: 730px;
             height: 90px;
-            background-image: url('bg_compacto.jpg');
+            background-image: url('%%FILE:JPG1%%');
             background-size: cover;
             background-position: center;
             transition: width 1s, height 1s, background-image 0.5s ease-in-out;
@@ -26,13 +26,12 @@
         #banner.expanded {
             width: 1000px;
             height: 500px;
-            background-image: url('bg_expandido.jpg');
+            background-image: url('%%FILE:JPG2%%');
             background-size: cover;
             background-position: center;
             position: fixed;
             inset: auto 0px 0px;
             margin: auto;
-            
         }
 
         #close_button,
@@ -41,7 +40,7 @@
             height: 14px;
             position: absolute;
             right: 0;
-            top: -14px;
+            top: 0px;
             cursor: pointer;
             z-index: 1000;
         }
@@ -180,15 +179,15 @@
 
 <body onload="initBanner()">
     <div id="banner" onmouseover="startExpandTimer()" onmouseout="cancelExpandTimer()" onclick="handleBannerClick()">
-        <img id="close_button" src="close_square.jpg" alt="Fechar" onclick="closeBanner(event)">
-        <img src="logo.png" id="logo" class="image-sequencial" alt="Logo">
-        <img src="cla_1.png" id="cla_1" class="image-sequencial" alt="Cla 1">
-        <img src="cla_2.png" id="cla_2" class="image-sequencial" alt="Cla 2">
+        <img id="close_button" src="%%FILE:JPG3%%" alt="Fechar" onclick="closeBanner(event)">
+        <img src="%%FILE:PNG2%%" id="logo" class="image-sequencial" alt="Logo">
+        <img src="%%FILE:PNG3%%" id="cla_1" class="image-sequencial" alt="Cla 1">
+        <img src="%%FILE:PNG1%%" id="cla_2" class="image-sequencial" alt="Cla 2">
 
-        <img src="logo_expandido.png" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
-        <img src="cla_1_expandido.png" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
-        <img src="cla_2_expandido.png" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
-        <iframe id="trailer_video" src="https://www.youtube.com/embed/1bIE5P6r-5s?rel=0&autoplay=0&controls=1"
+        <img src="%%FILE:PNG6%%" id="logo_expandido" class="image-expandido" alt="Logo Expandido">
+        <img src="%%FILE:PNG5%%" id="cla_1_expandido" class="image-expandido" alt="Cla 1 expandido">
+        <img src="%%FILE:PNG4%%" id="cla_2_expandido" class="image-expandido" alt="Cla 1 expandido">
+        <iframe id="trailer_video" src="https://www.youtube.com/embed/ERIBTIlVVJQ"
             title="Trailer" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
@@ -205,12 +204,6 @@
         var progressBarWidth = 0;
         var progressBarInterval;
 
-
-        // Chamada da função onclick="open_url()" no HTML
-        // function open_url() {
-        //     window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
-        // }
-
         function open_url_in_iframe(url) {
             document.getElementById('iframe_container').style.display = 'block';
             document.getElementById('iframe_container').style.margin = 'auto';
@@ -218,9 +211,8 @@
         }
 
         function handleBannerClick() {
-            // open_url_in_iframe("https://pages.github.com/");
-            // window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
-            window.open("https://pages.github.com/", "_blank");
+            //open_url_in_iframe("https://pages.github.com/");
+            window.open("%%CLICK_URL_UNESC%%%%DEST_URL%%", '_blank');
         }
 
         function startExpandTimer() {
@@ -246,6 +238,10 @@
         }
 
         function expandOnHover() {
+          if(window.frameElement){
+              window.frameElement.style.width = "1000px";
+            	window.frameElement.style.height = "500px";
+            }
             clearInterval(progressBarInterval);
             var banner = document.getElementById('banner');
             if (!banner.classList.contains('expanded')) {
@@ -254,10 +250,13 @@
         }
 
         function expandBanner() {
-            // window.frameElement.style.width = "1000px";
-            // window.frameElement.style.height = "530px";
-            document.getElementById('banner').style.display = 'block';
             setTimeout(() => {
+            if(window.frameElement){
+              window.frameElement.style.width = "1000px";
+            	window.frameElement.style.height = "500px";
+            }
+
+            document.getElementById('banner').style.display = 'block';
                 var banner = document.getElementById('banner');
                 if (!banner.classList.contains('expanded')) {
                     banner.classList.add('expanded');
@@ -280,11 +279,17 @@
             iframe.style.display = 'none';
         }
 
+
         function initBanner() {
-            // expandBanner();
+          
+            // setTimeout(() => {
+            //           window.frameElement.parentElement.parentElement.parentElement.querySelector('.btn_close, .ai-close-button').style.display = "none";
+            //         }, 500);
+            //expandBanner();
             setTimeout(() => {
                 document.getElementById('banner').classList.add('animar-imagens');
             }, 100);
+
         }
     </script>
 </body>
